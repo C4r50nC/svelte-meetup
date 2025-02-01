@@ -25,3 +25,15 @@
 </script>
 
 <Header />
+
+<section id="meetups">
+  {#each MEETUPS as meetup}
+    <MeetupItem />
+  {/each}
+</section>
+
+<style>
+  #meetups {
+    margin-top: 5rem;
+  }
+</style>
