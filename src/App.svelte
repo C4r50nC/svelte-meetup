@@ -28,7 +28,14 @@
 
 <section id="meetups">
   {#each MEETUPS as meetup}
-    <MeetupItem />
+    <MeetupItem
+      title={meetup.title}
+      subtitle={meetup.subtitle}
+      imageUrl={meetup.imageUrl}
+      description={meetup.description}
+      address={meetup.address}
+      email={meetup.contactEmail}
+    />
   {/each}
 </section>
 
