@@ -7,12 +7,15 @@
 <section id="meetups">
   {#each meetups as meetup}
     <MeetupItem
+      id={meetup.id}
       title={meetup.title}
       subtitle={meetup.subtitle}
       imageUrl={meetup.imageUrl}
       description={meetup.description}
       address={meetup.address}
       email={meetup.contactEmail}
+      isFavorite={meetup.isFavorite}
+      on:toggle-favorite
     />
   {/each}
 </section>

@@ -21,6 +21,7 @@
         'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Caffe_Nero_coffee_bar%2C_High_St%2C_Sutton%2C_Surrey%2C_Greater_London.JPG/800px-Caffe_Nero_coffee_bar%2C_High_St%2C_Sutton%2C_Surrey%2C_Greater_London.JPG',
       address: 'Dummy Address Road, 4242',
       contactEmail: 'code@test.com',
+      isFavorite: false,
     },
     {
       id: 'm2',
@@ -31,6 +32,7 @@
         'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Olympic_swimming_pool_%28Tbilisi%29.jpg/800px-Olympic_swimming_pool_%28Tbilisi%29.jpg',
       address: 'Dummy Address Road, 1234',
       contactEmail: 'swim@test.com',
+      isFavorite: false,
     },
   ];
 
@@ -46,6 +48,18 @@
     };
 
     meetups = [newMeetup, ...meetups];
+  }
+
+  function toggleFavorite(event) {
+    const id = event.detail;
+    const updatedMeetup = { ...meetups.find((meetup) => meetup.id === id) }; // Create a copy using the spread operator
+    updatedMeetup.isFavorite = !updatedMeetup.isFavorite;
+
+    const updatedMeetupIndex = meetups.findIndex((meetup) => meetup.id === id);
+    const updatedMeetups = [...meetups];
+    updatedMeetups[updatedMeetupIndex] = updatedMeetup;
+
+    meetups = updatedMeetups;
   }
 </script>
 
@@ -101,7 +115,7 @@
     <Button type="submit" caption="Save" />
   </form>
 
-  <MeetupGrid {meetups} />
+  <MeetupGrid {meetups} on:toggle-favorite={toggleFavorite} />
 </main>
 
 <style>
