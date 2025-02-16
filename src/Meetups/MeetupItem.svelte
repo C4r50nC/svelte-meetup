@@ -33,6 +33,7 @@
     <Button href="mailto:{email}" caption="Contact" />
     <Button
       mode="outline"
+      color={isFavorite ? null : 'success'}
       type="button"
       caption={isFavorite ? 'Unfavorite' : 'Favorite'}
       on:click={() => dispatch('toggle-favorite', id)}
