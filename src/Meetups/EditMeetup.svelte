@@ -71,7 +71,7 @@
     on:input={(event) => (description = event.target.value)}
   />
 
-  <Button type="submit" caption="Save" />
+  <Button type="submit">Save</Button>
 </form>
 
 <style>
