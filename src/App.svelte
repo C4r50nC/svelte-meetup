@@ -31,6 +31,20 @@
 
   let editMode = null;
 
+  function addMeetup(event) {
+    const newMeetup = {
+      id: Math.random().toString(),
+      title: event.detail.title,
+      subtitle: event.detail.subtitle,
+      description: event.detail.description,
+      imageUrl: event.detail.imageUrl,
+      address: event.detail.address,
+      contactEmail: event.detail.email,
+    };
+    meetups = [newMeetup, ...meetups];
+    editMode = null;
+  }
+
   function toggleFavorite(event) {
     const id = event.detail;
     const updatedMeetup = { ...meetups.find((meetup) => meetup.id === id) }; // Create a copy using the spread operator
@@ -47,9 +61,11 @@
 <Header />
 
 <main>
-  <Button caption="New Meetup" on:click={() => (editMode = 'add')} />
+  <div class="meetup-controls">
+    <Button caption="New Meetup" on:click={() => (editMode = 'add')} />
+  </div>
   {#if editMode === 'add'}
-    <EditMeetup />
+    <EditMeetup on:save={addMeetup} />
   {/if}
   <MeetupGrid {meetups} on:toggle-favorite={toggleFavorite} />
 </main>
@@ -57,5 +73,9 @@
 <style>
   main {
     margin-top: 5rem;
+  }
+
+  .meetup-controls {
+    margin: 1rem;
   }
 </style>

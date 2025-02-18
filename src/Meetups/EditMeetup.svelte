@@ -25,7 +25,7 @@
   }
 </script>
 
-<form on:submit|preventDefault={() => submitForm}>
+<form on:submit|preventDefault={submitForm}>
   <TextInput
     id="title"
     label="Title"
