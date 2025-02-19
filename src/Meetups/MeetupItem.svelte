@@ -17,7 +17,7 @@
 
 <article>
   <header>
-    <h1>
+    <h1 class={isFavorite ? 'is-favorite' : ''}>
       {title}
       {#if isFavorite}
         <Badge>FAVORITE</Badge>
