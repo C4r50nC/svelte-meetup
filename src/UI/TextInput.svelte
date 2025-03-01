@@ -18,13 +18,13 @@
       class:invalid={!valid && touched}
       {rows}
       {id}
-      {value}
-      on:input
+      bind:value
       on:blur={() => {
         touched = true;
       }}
     ></textarea>
   {:else}
+    <!-- Two-way binding cannot be used when the type is dynamic -->
     <input
       class:invalid={!valid && touched}
       {type}
