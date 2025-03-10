@@ -10,8 +10,7 @@
   let editMode = null;
 
   function addMeetup(event) {
-    const newMeetup = {
-      id: Math.random().toString(),
+    const newMeetupData = {
       title: event.detail.title,
       subtitle: event.detail.subtitle,
       description: event.detail.description,
@@ -19,7 +18,7 @@
       address: event.detail.address,
       contactEmail: event.detail.email,
     };
-    meetups = [newMeetup, ...meetups];
+    meetups.addMeetup(newMeetupData);
     editMode = null;
   }
 
@@ -29,14 +28,7 @@
 
   function toggleFavorite(event) {
     const id = event.detail;
-    const updatedMeetup = { ...meetups.find((meetup) => meetup.id === id) }; // Create a copy using the spread operator
-    updatedMeetup.isFavorite = !updatedMeetup.isFavorite;
-
-    const updatedMeetupIndex = meetups.findIndex((meetup) => meetup.id === id);
-    const updatedMeetups = [...meetups];
-    updatedMeetups[updatedMeetupIndex] = updatedMeetup;
-
-    meetups = updatedMeetups;
+    meetups.toggleFavorite(id);
   }
 </script>
 
