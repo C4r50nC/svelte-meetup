@@ -6,6 +6,7 @@
   import Modal from '../UI/Modal.svelte';
 
   import { isEmpty, isValidEmail } from '../helpers/validation';
+  import meetups from './meetups-store';
 
   let title = '';
   let subtitle = '';
@@ -32,14 +33,17 @@
     imageUrlValid;
 
   function submitForm() {
-    dispatch('save', {
+    const newMeetupData = {
       title: title,
       subtitle: subtitle,
-      address: address,
-      email: email,
       description: description,
       imageUrl: imageUrl,
-    });
+      address: address,
+      contactEmail: email,
+    };
+    meetups.addMeetup(newMeetupData);
+
+    dispatch('save');
   }
 
   function cancel() {
