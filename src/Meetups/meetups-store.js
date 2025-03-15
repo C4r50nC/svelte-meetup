@@ -35,6 +35,16 @@ const customMeetupsStore = {
     };
     meetups.update((items) => [newMeetup, ...items]);
   },
+  updateMeetup: (id, meetupData) => {
+    meetups.update((items) => {
+      const meetupIndex = items.findIndex((i) => i.id === id);
+      const updatedMeetup = { ...meetups[meetupIndex], ...meetupData }; // Override original data with meetupData
+      // Create updated meetups as a separate list and return
+      const updatedMeetups = [...items];
+      updatedMeetups[meetupIndex] = updatedMeetup;
+      return updatedMeetups;
+    });
+  },
   toggleFavorite: (id) => {
     meetups.update((items) => {
       const updatedMeetup = { ...items.find((meetup) => meetup.id === id) }; // Create a copy using the spread operator
