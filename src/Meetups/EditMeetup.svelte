@@ -145,7 +145,7 @@
 
     <TextInput
       id="description"
-      label="description"
+      label="Description"
       valid={descriptionValid}
       validityMessage="Please enter a valid description"
       bind:value={description}
