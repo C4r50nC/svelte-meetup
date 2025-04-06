@@ -60,7 +60,26 @@
     if (id) {
       meetups.updateMeetup(id, newMeetupData);
     } else {
-      meetups.addMeetup(newMeetupData);
+      fetch(
+        'https://svelte-http-ad86f-default-rtdb.asia-southeast1.firebasedatabase.app/meetups.json',
+        {
+          method: 'POST',
+          body: JSON.stringify({ ...newMeetupData, isFavorite: false }),
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
+        .then((res) => {
+          if (!res.ok) throw new Error('An error occurred, please try again!');
+          return res.json();
+        })
+        .then((data) => {
+          meetups.addMeetup({
+            ...newMeetupData,
+            isFavorite: false,
+            id: data.name,
+          });
+        })
+        .catch((err) => console.log(err));
     }
 
     dispatch('save');
