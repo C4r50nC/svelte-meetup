@@ -3,6 +3,7 @@
   import MeetupDetail from './Meetups/MeetupDetail.svelte';
   import MeetupGrid from './Meetups/MeetupGrid.svelte';
   import EditMeetup from './Meetups/EditMeetup.svelte';
+  import LoadingSpinner from './UI/LoadingSpinner.svelte';
 
   import meetupStore from './Meetups/meetups-store';
 
@@ -11,6 +12,7 @@
   let page = 'overview';
   let pageData = {};
   let editedId;
+  let isLoading = true;
 
   fetch(
     'https://svelte-http-ad86f-default-rtdb.asia-southeast1.firebasedatabase.app/meetups.json'
@@ -25,9 +27,15 @@
       for (const key in data) {
         loadedMeetups.push({ ...data[key], id: key });
       }
-      meetups.setMeetups(loadedMeetups);
+      setTimeout(() => {
+        isLoading = false;
+        meetups.setMeetups(loadedMeetups);
+      }, 1000); // Simulate 1 second waiting time
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      isLoading = false;
+      console.log(err);
+    });
 
   function savedMeetup(event) {
     editMode = null;
@@ -62,14 +70,18 @@
     {#if editMode === 'edit'}
       <EditMeetup id={editedId} on:save={savedMeetup} on:cancel={cancelEdit} />
     {/if}
-    <MeetupGrid
-      meetups={$meetups}
-      on:showdetails={showDetails}
-      on:edit={startEdit}
-      on:add={() => {
-        editMode = 'edit';
-      }}
-    />
+    {#if isLoading}
+      <LoadingSpinner />
+    {:else}
+      <MeetupGrid
+        meetups={$meetups}
+        on:showdetails={showDetails}
+        on:edit={startEdit}
+        on:add={() => {
+          editMode = 'edit';
+        }}
+      />
+    {/if}
   {:else}
     <MeetupDetail id={pageData.id} on:close={closeDetails} />
   {/if}
