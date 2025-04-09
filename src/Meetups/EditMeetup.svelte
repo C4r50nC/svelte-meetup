@@ -102,7 +102,15 @@
   }
 
   function deleteMeetup() {
-    meetups.removeMeetup(id);
+    fetch(
+      `https://svelte-http-ad86f-default-rtdb.asia-southeast1.firebasedatabase.app/meetups/${id}.json`,
+      { method: 'DELETE' }
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error('An error occurred, please try again!');
+        meetups.removeMeetup(id);
+      })
+      .catch((err) => console.log(err));
     dispatch('save');
   }
 </script>
