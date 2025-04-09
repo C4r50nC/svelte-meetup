@@ -17,7 +17,19 @@
   const dispatch = createEventDispatcher();
 
   function toggleFavorite() {
-    meetups.toggleFavorite(id);
+    fetch(
+      `https://svelte-http-ad86f-default-rtdb.asia-southeast1.firebasedatabase.app/meetups/${id}.json`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ isFavorite: !isFavorite }),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error('An error occurred, please try again!');
+        meetups.toggleFavorite(id);
+      })
+      .catch((err) => console.log(err));
   }
 </script>
 
