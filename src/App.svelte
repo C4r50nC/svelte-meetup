@@ -4,6 +4,7 @@
   import MeetupGrid from './Meetups/MeetupGrid.svelte';
   import EditMeetup from './Meetups/EditMeetup.svelte';
   import LoadingSpinner from './UI/LoadingSpinner.svelte';
+  import Error from './UI/Error.svelte';
 
   import meetupStore from './Meetups/meetups-store';
 
@@ -13,6 +14,7 @@
   let pageData = {};
   let editedId;
   let isLoading = true;
+  let error;
 
   fetch(
     'https://svelte-http-ad86f-default-rtdb.asia-southeast1.firebasedatabase.app/meetups.json'
@@ -33,6 +35,7 @@
       }, 1000); // Simulate 1 second waiting time
     })
     .catch((err) => {
+      error = err;
       isLoading = false;
       console.log(err);
     });
@@ -61,7 +64,15 @@
     editMode = 'edit';
     editedId = event.detail;
   }
+
+  function clearError() {
+    error = null;
+  }
 </script>
+
+{#if error}
+  <Error message={error.message} on:cancel={clearError} />
+{/if}
 
 <Header />
 
